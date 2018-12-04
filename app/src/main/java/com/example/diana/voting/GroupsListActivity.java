@@ -22,6 +22,9 @@ import org.json.JSONException;
 
 public class GroupsListActivity extends AppCompatActivity {
     public static final String GROUP_ID = "GROUP_ID";
+    public static final String USER_ID = "USER_ID";
+
+    private String userId = "5bf2918d77167f22f6f3471e";
 
     LinearLayout groupsList;
     RequestQueue requestQueue;
@@ -56,6 +59,7 @@ public class GroupsListActivity extends AppCompatActivity {
             public void onClick(View v){
                 Intent intent = new Intent(GroupsListActivity.this, VotingsListActivity.class);
                 intent.putExtra(GROUP_ID, group._id);
+                intent.putExtra(USER_ID, userId);
                 startActivity(intent);
             }
         });

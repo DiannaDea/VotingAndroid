@@ -30,7 +30,6 @@ public class VotingsListActivity extends AppCompatActivity implements AdapterVie
     RequestQueue requestQueue;
 
     String baseUrl = "http://192.168.37.146:5000/api";
-    String url;
     Gson gson = new Gson();
 
     LinearLayout votingsList;
@@ -49,27 +48,57 @@ public class VotingsListActivity extends AppCompatActivity implements AdapterVie
 
         Intent intent = getIntent();
         this.groupId = intent.getStringExtra(GroupsListActivity.GROUP_ID);
-        this.userId = "5bf2918d77167f22f6f3471e";
+        this.userId = intent.getStringExtra(GroupsListActivity.USER_ID);
 
-        Spinner dropdown = findViewById(R.id.selectType);
-        dropdown.setOnItemSelectedListener(this);
-        String[] items = new String[]{"View all", "New votings", "Already voted"};
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
-        dropdown.setAdapter(adapter);
+        this.setVotingFilter();
 
         this.votingsList = (LinearLayout) findViewById(R.id.votingsList);
 
         requestQueue = Volley.newRequestQueue(this);
 
+        this.performInitialRequests();
+    }
+
+    private void performInitialRequests(){
         getVotingListByState("new");
         getVotingListByState("recent");
+    }
+
+    private void setVotingFilter(){
+        Spinner votingFilter = findViewById(R.id.selectType);
+
+        String[] items = new String[]{"View all", "New votings", "Already voted"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+
+        votingFilter.setAdapter(adapter);
+        votingFilter.setOnItemSelectedListener(this);
     }
 
     private void renderVotingsList(List<Voting> votings){
         for(Voting voting : votings) {
             addVotingToList(voting);
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        votingsList.removeAllViews();
+        switch (position){
+            case 0:
+                renderVotingsList(allVotings);
+                break;
+            case 1:
+                renderVotingsList(newVotings);
+                break;
+            case 2:
+                renderVotingsList(recentVotings);
+                break;
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 
     private void addVotingToList(final Voting voting){
@@ -86,7 +115,7 @@ public class VotingsListActivity extends AppCompatActivity implements AdapterVie
     }
 
     private void getVotingListByState(final String state) {
-        this.url = String.format("%s/groups/%s/users/%s/votings?state=%s", this.baseUrl, this.groupId, this.userId, state);
+        String url = String.format("%s/groups/%s/users/%s/votings?state=%s", this.baseUrl, this.groupId, this.userId, state);
 
         JsonArrayRequest arrReq = new JsonArrayRequest(Request.Method.GET, url,
                 new Response.Listener<JSONArray>() {
@@ -126,26 +155,5 @@ public class VotingsListActivity extends AppCompatActivity implements AdapterVie
                 }
         );
         requestQueue.add(arrReq);
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        votingsList.removeAllViews();
-        switch (position){
-            case 0:
-                renderVotingsList(allVotings);
-                break;
-            case 1:
-                renderVotingsList(newVotings);
-                break;
-            case 2:
-                renderVotingsList(recentVotings);
-                break;
-        }
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
     }
 }
