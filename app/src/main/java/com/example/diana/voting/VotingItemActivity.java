@@ -1,12 +1,16 @@
 package com.example.diana.voting;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -50,7 +54,6 @@ public class VotingItemActivity extends AppCompatActivity {
         this.getCandidates();
     }
 
-
     private void fillVotingFields(Voting voting){
         TextView topicField = findViewById(R.id.topic);
         topicField.setText(voting.topic);
@@ -64,7 +67,6 @@ public class VotingItemActivity extends AppCompatActivity {
         TextView percentField = findViewById(R.id.percent);
         percentField.setText(String.format("%d %%", voting.votersPercent));
     }
-
 
     private void getVoting(){
         String url = String.format("%s/votings/%s", this.baseUrl, this.votingId);
@@ -126,5 +128,85 @@ public class VotingItemActivity extends AppCompatActivity {
                 }
         );
         requestQueue.add(arrReq);
+    }
+
+    private void addCandidateToDialogList(Candidate candidate) {
+        TextView candidateItem = new TextView(this);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.setMargins(0,0,0,20);
+
+        candidateItem.setLayoutParams(params);
+        candidateItem.setText(candidate.name);
+        candidateItem.setBackgroundColor(0xffffdbdb);
+        candidateItem.setPadding(20, 20, 20, 20);
+
+        this.candidatesList.addView(candidateItem);
+    }
+
+    private void addCoefficientToDialogList(Coefficient coefficient) {
+        TextView coefficientItem = new TextView(this);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.setMargins(0,0,0,20);
+
+        coefficientItem.setLayoutParams(params);
+        coefficientItem.setText(coefficient.name);
+        coefficientItem.setBackgroundColor(0xffffdbdb);
+        coefficientItem.setPadding(20, 20, 20, 20);
+
+        this.coefficientsList.addView(coefficientItem);
+    }
+
+    private void fillDialogWithCandidates(){
+        for (Candidate candidate: candidates) {
+            addCandidateToDialogList(candidate);
+        }
+    }
+
+    private void fillDialogWithCoefficients(){
+        for (Coefficient coefficient: votingItem.coefficients) {
+            addCoefficientToDialogList(coefficient);
+        }
+    }
+
+    public void viewCandidates(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Voting candidates");
+
+        final View customLayout = getLayoutInflater().inflate(R.layout.candidates_dialog, null);
+        builder.setView(customLayout);
+
+        this.candidatesList = (LinearLayout) customLayout.findViewById(R.id.candidatesList);
+
+        fillDialogWithCandidates();
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+
+        AlertDialog candidatesDialog = builder.create();
+        candidatesDialog.show();
+    }
+
+    public void viewCoefficients(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Voting coefficients");
+
+        final View customLayout = getLayoutInflater().inflate(R.layout.coefficients_dialog, null);
+        builder.setView(customLayout);
+
+        this.coefficientsList = (LinearLayout) customLayout.findViewById(R.id.coefficientsList);
+
+        fillDialogWithCoefficients();
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+
+        AlertDialog coefficientsDialog = builder.create();
+        coefficientsDialog.show();
     }
 }
