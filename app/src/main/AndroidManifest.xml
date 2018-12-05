@@ -34,7 +34,10 @@
         </activity>
         <activity
             android:name=".VotingsListActivity"
-            android:parentActivityName=".GroupsListActivity"
+            android:parentActivityName=".GroupsListActivity" />
+        <activity
+            android:name=".VotingItemActivity"
+            android:parentActivityName=".VotingsListActivity"
             ></activity>
     </application>
 

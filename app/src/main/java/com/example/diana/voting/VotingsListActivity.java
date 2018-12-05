@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VotingsListActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+    public static final String VOTING_ID = "VOTING_ID";
+
     RequestQueue requestQueue;
 
     String baseUrl = "http://192.168.37.146:5000/api";
@@ -110,6 +112,16 @@ public class VotingsListActivity extends AppCompatActivity implements AdapterVie
         votingItem.setText(voting.topic);
         votingItem.setBackgroundColor(0xffffdbdb);
         votingItem.setPadding(20, 20, 20, 20);
+
+        votingItem.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Intent intent = new Intent(VotingsListActivity.this, VotingItemActivity.class);
+                intent.putExtra(VOTING_ID, voting._id);
+                intent.putExtra(VOTING_ID, voting._id);
+                startActivity(intent);
+            }
+        });
+
 
         this.votingsList.addView(votingItem);
     }
