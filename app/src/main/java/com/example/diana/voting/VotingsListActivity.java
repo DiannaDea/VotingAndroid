@@ -1,12 +1,17 @@
 package com.example.diana.voting;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -16,6 +21,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 
@@ -103,12 +109,25 @@ public class VotingsListActivity extends AppCompatActivity implements AdapterVie
 
     }
 
-    private void addVotingToList(final Voting voting){
-        TextView votingItem = new TextView(this);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        params.setMargins(0,0,0,20);
+    private void addButtonToContainer(final Voting voting, LinearLayout votingContainer) {
+        Button btnTag = new Button(this);
+        btnTag.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        btnTag.setText("Results");
 
-        votingItem.setLayoutParams(params);
+        if (voting.status.equals("finished")) {
+            votingContainer.addView(btnTag);
+        }
+
+        btnTag.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                viewResults(v, voting._id);
+            }
+        });
+    }
+
+    private void addTextToContainer(final Voting voting, LinearLayout votingContainer) {
+        TextView votingItem = new TextView(this);
+
         votingItem.setText(voting.topic);
         votingItem.setBackgroundColor(0xffffdbdb);
         votingItem.setPadding(20, 20, 20, 20);
@@ -122,8 +141,22 @@ public class VotingsListActivity extends AppCompatActivity implements AdapterVie
             }
         });
 
+        votingContainer.addView(votingItem);
+    }
 
-        this.votingsList.addView(votingItem);
+    private void addVotingToList(final Voting voting){
+        LinearLayout votingItemContainer = new LinearLayout(this);
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        params.setMargins(16,0,16,20);
+
+        votingItemContainer.setLayoutParams(params);
+
+        this.addTextToContainer(voting, votingItemContainer);
+        this.addButtonToContainer(voting, votingItemContainer);
+
+        this.votingsList.addView(votingItemContainer);
     }
 
     private void getVotingListByState(final String state) {
@@ -167,5 +200,69 @@ public class VotingsListActivity extends AppCompatActivity implements AdapterVie
                 }
         );
         requestQueue.add(arrReq);
+    }
+
+    public void viewResults(View view, String votingId) {
+        String url = String.format("%s/votings/%s/results", this.baseUrl, votingId);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET,
+                url,
+                (String)null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject jsonObj) {
+                        VotingResults votingResults = gson.fromJson(jsonObj.toString(), VotingResults.class);
+                        showResultsDialog(votingResults);
+                    }
+                },
+                new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error){
+                        Log.e("Volley", error.toString());
+                    }
+                }
+        );
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    private void addResultToDialogList(ResultsItem result, LinearLayout resultsListContainer) {
+        TextView resultItemText = new TextView(this);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.setMargins(0,0,0,20);
+
+        resultItemText.setLayoutParams(params);
+        resultItemText.setText(String.format("%s - %.1f", result.candidate.name, result.votesValue));
+
+        resultItemText.setPadding(20, 20, 20, 20);
+
+        resultsListContainer.addView(resultItemText);
+    }
+
+    public void fillDialogsWithResults(VotingResults votingResults, View customLayout) {
+        LinearLayout resultsListContainer = (LinearLayout) customLayout.findViewById(R.id.votingResultsDialog);
+
+        for(ResultsItem result: votingResults.results) {
+            addResultToDialogList(result, resultsListContainer);
+        }
+    }
+
+    public void showResultsDialog(VotingResults votingResults) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(VotingsListActivity.this);
+        builder.setTitle("Results");
+
+        final View customLayout = getLayoutInflater().inflate(R.layout.voting_results_dialog, null);
+        builder.setView(customLayout);
+
+        fillDialogsWithResults(votingResults, customLayout);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+
+        AlertDialog resultsDialog = builder.create();
+        resultsDialog.show();
     }
 }

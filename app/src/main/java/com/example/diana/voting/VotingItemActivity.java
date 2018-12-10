@@ -66,6 +66,9 @@ public class VotingItemActivity extends AppCompatActivity {
 
         TextView percentField = findViewById(R.id.percent);
         percentField.setText(String.format("%d %%", voting.votersPercent));
+
+        TextView statusField = findViewById(R.id.status);
+        statusField.setText(voting.status);
     }
 
     private void getVoting(){
