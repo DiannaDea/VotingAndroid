@@ -57,9 +57,9 @@ public class GroupsListActivity extends AppCompatActivity {
 
         groupItem.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
+                State.getInstance().setCurGroupId(group._id);
+
                 Intent intent = new Intent(GroupsListActivity.this, VotingsListActivity.class);
-                intent.putExtra(GROUP_ID, group._id);
-                intent.putExtra(USER_ID, userId);
                 startActivity(intent);
             }
         });

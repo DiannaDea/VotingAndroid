@@ -33,7 +33,7 @@ public class VotingItemActivity extends AppCompatActivity {
     RequestQueue requestQueue;
     Gson gson = new Gson();
 
-    String votingId;
+    String votingId = State.getInstance().getCurVotingId();
     Voting votingItem;
     List<Candidate> candidates = new ArrayList<Candidate>();
 
@@ -44,9 +44,6 @@ public class VotingItemActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_voting_item);
-
-        Intent intent = getIntent();
-        this.votingId = intent.getStringExtra(VotingsListActivity.VOTING_ID);
 
         requestQueue = Volley.newRequestQueue(this);
 

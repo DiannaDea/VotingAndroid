@@ -42,8 +42,8 @@ public class VotingsListActivity extends AppCompatActivity implements AdapterVie
 
     LinearLayout votingsList;
 
-    private String groupId;
-    private String userId;
+    private String groupId = State.getInstance().getCurGroupId();
+    private String userId = State.getInstance().getUserId();
 
     private List<Voting> newVotings = new ArrayList<Voting>();
     private List<Voting> recentVotings = new ArrayList<Voting>();
@@ -53,10 +53,6 @@ public class VotingsListActivity extends AppCompatActivity implements AdapterVie
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_votings_list);
-
-        Intent intent = getIntent();
-        this.groupId = intent.getStringExtra(GroupsListActivity.GROUP_ID);
-        this.userId = intent.getStringExtra(GroupsListActivity.USER_ID);
 
         this.setVotingFilter();
 
@@ -135,8 +131,8 @@ public class VotingsListActivity extends AppCompatActivity implements AdapterVie
         votingItem.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 Intent intent = new Intent(VotingsListActivity.this, VotingItemActivity.class);
-                intent.putExtra(VOTING_ID, voting._id);
-                intent.putExtra(VOTING_ID, voting._id);
+
+                State.getInstance().setCurVotingId(voting._id);
                 startActivity(intent);
             }
         });

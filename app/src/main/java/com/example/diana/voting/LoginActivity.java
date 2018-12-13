@@ -18,6 +18,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void sendMessage(View view) {
+        State.getInstance().setUserId("5bf2918d77167f22f6f3471e");
+
+
         Intent intent = new Intent(this, GroupsListActivity.class);
 
         EditText userEmailField = (EditText) findViewById(R.id.textView_email);
