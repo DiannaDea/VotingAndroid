@@ -3,10 +3,13 @@ package com.example.diana.voting;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -123,9 +126,8 @@ public class VotingsListActivity extends AppCompatActivity implements AdapterVie
 
     private void addTextToContainer(final Voting voting, LinearLayout votingContainer) {
         TextView votingItem = new TextView(this);
-
         votingItem.setText(voting.topic);
-        votingItem.setBackgroundColor(0xffffdbdb);
+        votingItem.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
         votingItem.setPadding(20, 20, 20, 20);
 
         votingItem.setOnClickListener(new View.OnClickListener(){
@@ -141,18 +143,25 @@ public class VotingsListActivity extends AppCompatActivity implements AdapterVie
     }
 
     private void addVotingToList(final Voting voting){
+        CardView card = new CardView(this);
         LinearLayout votingItemContainer = new LinearLayout(this);
 
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.FILL_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        params.setMargins(0,0,0,20);
+        card.setLayoutParams(params);
 
-        params.setMargins(16,0,16,20);
-
-        votingItemContainer.setLayoutParams(params);
+        card.setRadius(9);
+        card.setCardBackgroundColor(Color.parseColor("#FFC6D6C3"));
 
         this.addTextToContainer(voting, votingItemContainer);
         this.addButtonToContainer(voting, votingItemContainer);
 
-        this.votingsList.addView(votingItemContainer);
+        card.addView(votingItemContainer);
+
+        this.votingsList.addView(card);
     }
 
     private void getVotingListByState(final String state) {
