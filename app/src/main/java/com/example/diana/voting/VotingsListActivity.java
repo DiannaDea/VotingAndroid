@@ -143,6 +143,7 @@ public class VotingsListActivity extends AppCompatActivity implements AdapterVie
     }
 
     private void addVotingToList(final Voting voting){
+
         CardView card = new CardView(this);
         LinearLayout votingItemContainer = new LinearLayout(this);
 

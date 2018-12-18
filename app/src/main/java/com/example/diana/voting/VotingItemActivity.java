@@ -25,8 +25,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class VotingItemActivity extends AppCompatActivity {
     String baseUrl = "http://192.168.37.146:5000/api";
@@ -51,21 +55,26 @@ public class VotingItemActivity extends AppCompatActivity {
         this.getCandidates();
     }
 
+    private String formatDate(Date initDate) {
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.ENGLISH);
+        return dateFormat.format(initDate);
+    }
+
     private void fillVotingFields(Voting voting){
         TextView topicField = findViewById(R.id.topic);
         topicField.setText(voting.topic);
 
         TextView dateStartField = findViewById(R.id.dateStart);
-        dateStartField.setText(voting.dateStart);
+        dateStartField.setText(formatDate(voting.dateStart));
 
         TextView dateEndField = findViewById(R.id.dateEnd);
-        dateEndField.setText(voting.dateEnd);
+        dateEndField.setText(formatDate(voting.dateEnd));
 
         TextView percentField = findViewById(R.id.percent);
         percentField.setText(String.format("%d %%", voting.votersPercent));
 
         TextView statusField = findViewById(R.id.status);
-        statusField.setText(voting.status);
+        statusField.setText(voting.status.toUpperCase());
     }
 
     private void getVoting(){

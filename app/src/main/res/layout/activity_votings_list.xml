@@ -32,7 +32,9 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/selectType"
-        app:layout_constraintVertical_bias="0.0"></LinearLayout>
+        app:layout_constraintVertical_bias="0.0">
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textView"
@@ -45,4 +47,5 @@
         android:textSize="@dimen/h1_font_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </android.support.constraint.ConstraintLayout>
