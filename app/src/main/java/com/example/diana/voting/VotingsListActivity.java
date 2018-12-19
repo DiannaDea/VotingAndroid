@@ -34,6 +34,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class VotingsListActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -108,40 +110,6 @@ public class VotingsListActivity extends AppCompatActivity implements AdapterVie
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
-    }
-
-    private void addButtonToContainer(final Voting voting, LinearLayout votingContainer) {
-        Button btnTag = new Button(this);
-        btnTag.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-        btnTag.setText("Results");
-
-        if (voting.status.equals("finished")) {
-            votingContainer.addView(btnTag);
-        }
-
-        btnTag.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                viewResults(v, voting._id);
-            }
-        });
-    }
-
-    private void addTextToContainer(final Voting voting, LinearLayout votingContainer) {
-        TextView votingItem = new TextView(this);
-        votingItem.setText(voting.topic);
-        votingItem.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
-        votingItem.setPadding(20, 20, 20, 20);
-
-        votingItem.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                Intent intent = new Intent(VotingsListActivity.this, VotingItemActivity.class);
-
-                State.getInstance().setCurVotingId(voting._id);
-                startActivity(intent);
-            }
-        });
-
-        votingContainer.addView(votingItem);
     }
 
     private void addVotingToList(final Voting voting){
@@ -280,24 +248,78 @@ public class VotingsListActivity extends AppCompatActivity implements AdapterVie
         requestQueue.add(jsonObjectRequest);
     }
 
-    private void addResultToDialogList(ResultsItem result, LinearLayout resultsListContainer) {
-        TextView resultItemText = new TextView(this);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        params.setMargins(0,0,0,20);
+    private LinearLayout addResultDescription(ResultsItem result) {
+        LinearLayout candidateItem = new LinearLayout(this);
+        LinearLayout.LayoutParams candidateItemParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 0.8f);
+        candidateItemParams.setMargins(50,20,0,20);
+        candidateItem.setOrientation(LinearLayout.VERTICAL);
+        candidateItem.setLayoutParams(candidateItemParams);
 
-        resultItemText.setLayoutParams(params);
-        resultItemText.setText(String.format("%s - %.1f", result.candidate.name, result.votesValue));
 
-        resultItemText.setPadding(20, 20, 20, 20);
+        TextView resultName = new TextView(this);
+        LinearLayout.LayoutParams resultNameParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 0.5f);
+        resultName.setGravity(Gravity.FILL_VERTICAL);
+        resultName.setText(result.candidate.name);
+        resultName.setTypeface(null, Typeface.BOLD);
+        resultName.setTextSize(18);
+        resultName.setLayoutParams(resultNameParams);
 
-        resultsListContainer.addView(resultItemText);
+        TextView votesValue = new TextView(this);
+        LinearLayout.LayoutParams votesValueParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 0.5f);
+        votesValue.setGravity(Gravity.FILL_VERTICAL);
+        votesValue.setText("result: ".concat(Double.toString(result.votesValue)));
+        votesValue.setTextSize(18);
+        votesValue.setLayoutParams(votesValueParams);
+
+        candidateItem.addView(resultName);
+        candidateItem.addView(votesValue);
+
+        return candidateItem;
+    }
+
+    private void addResultToDialogList(ResultsItem result, LinearLayout resultsListContainer, int count) {
+        LinearLayout resultItem = new LinearLayout(this);
+        LinearLayout.LayoutParams resultItemParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        resultItemParams.setMargins(0,20,20,20);
+        resultItem.setOrientation(LinearLayout.HORIZONTAL);
+        resultItem.setLayoutParams(resultItemParams);
+
+        TextView positionValue = new TextView(this);
+        LinearLayout.LayoutParams positionValueParams = new LinearLayout.LayoutParams(180, LinearLayout.LayoutParams.MATCH_PARENT, 0.2f);
+        positionValue.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+        positionValue.setText("#".concat(Integer.toString(count)));
+        positionValue.setTextColor(getResources().getColor(R.color.colorPrimary));
+        positionValue.setTextSize(20);
+        positionValueParams.setMargins(20, 20, 0, 20);
+        positionValue.setBackgroundResource(R.drawable.rounded_textview);
+        positionValue.setTypeface(null, Typeface.BOLD);
+        positionValue.setLayoutParams(positionValueParams);
+
+
+        LinearLayout candidateItem = addResultDescription(result);
+        
+        resultItem.addView(positionValue);
+        resultItem.addView(candidateItem);
+
+        resultsListContainer.addView(resultItem);
+    }
+
+    public class ResultsComparator implements Comparator<ResultsItem> {
+        @Override
+        public int compare(ResultsItem o1, ResultsItem o2) {
+            return Double.compare(o2.votesValue, o1.votesValue);
+        }
     }
 
     public void fillDialogsWithResults(VotingResults votingResults, View customLayout) {
         LinearLayout resultsListContainer = (LinearLayout) customLayout.findViewById(R.id.votingResultsDialog);
 
+        Collections.sort(votingResults.results, new ResultsComparator());
+        int count = 1;
+
         for(ResultsItem result: votingResults.results) {
-            addResultToDialogList(result, resultsListContainer);
+            addResultToDialogList(result, resultsListContainer, count);
+            count++;
         }
     }
 
