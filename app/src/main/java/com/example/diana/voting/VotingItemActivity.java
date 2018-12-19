@@ -3,11 +3,14 @@ package com.example.diana.voting;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -140,27 +143,56 @@ public class VotingItemActivity extends AppCompatActivity {
     }
 
     private void addCandidateToDialogList(Candidate candidate) {
-        TextView candidateItem = new TextView(this);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        params.setMargins(0,0,0,20);
+        LinearLayout candidateItem = new LinearLayout(this);
+        LinearLayout.LayoutParams candidateItemParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 120);
+        candidateItemParams.setMargins(15,10,0,10);
+        candidateItem.setOrientation(LinearLayout.VERTICAL);
+        candidateItem.setLayoutParams(candidateItemParams);
 
-        candidateItem.setLayoutParams(params);
-        candidateItem.setText(candidate.name);
-        candidateItem.setBackgroundColor(0xffffdbdb);
-        candidateItem.setPadding(20, 20, 20, 20);
+        TextView candidateName = new TextView(this);
+        LinearLayout.LayoutParams candidateNameParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 60);
+        candidateName.setText(candidate.name);
+        candidateName.setTypeface(null, Typeface.BOLD);
+        candidateName.setTextColor(getResources().getColor(R.color.colorPrimary));
+        candidateName.setTextSize(20);
+        candidateName.setLayoutParams(candidateNameParams);
+
+        TextView candidateDescription = new TextView(this);
+        LinearLayout.LayoutParams candidateDescriptionParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 60);
+        candidateDescription.setText(candidate.description);
+        candidateDescription.setLayoutParams(candidateDescriptionParams);
+
+        candidateItem.addView(candidateName);
+        candidateItem.addView(candidateDescription);
 
         this.candidatesList.addView(candidateItem);
     }
 
     private void addCoefficientToDialogList(Coefficient coefficient) {
-        TextView coefficientItem = new TextView(this);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        params.setMargins(0,0,0,20);
+        LinearLayout coefficientItem = new LinearLayout(this);
+        LinearLayout.LayoutParams coefficientItemParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        coefficientItemParams.setMargins(0,20,0,20);
+        coefficientItem.setOrientation(LinearLayout.HORIZONTAL);
+        coefficientItem.setLayoutParams(coefficientItemParams);
 
-        coefficientItem.setLayoutParams(params);
-        coefficientItem.setText(coefficient.name);
-        coefficientItem.setBackgroundColor(0xffffdbdb);
-        coefficientItem.setPadding(20, 20, 20, 20);
+        TextView coeffValue = new TextView(this);
+        LinearLayout.LayoutParams coeffValueParams = new LinearLayout.LayoutParams(50, LinearLayout.LayoutParams.MATCH_PARENT, 0.2f);
+        coeffValue.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+        coeffValue.setText(Integer.toString(coefficient.cost));
+        coeffValue.setTextColor(getResources().getColor(R.color.colorPrimary));
+        coeffValue.setTextSize(20);
+        coeffValue.setTypeface(null, Typeface.BOLD);
+        coeffValue.setLayoutParams(coeffValueParams);
+
+        TextView coeffName = new TextView(this);
+        LinearLayout.LayoutParams coeffNameParams = new LinearLayout.LayoutParams(242, LinearLayout.LayoutParams.MATCH_PARENT, 0.8f);
+        coeffName.setGravity(Gravity.CENTER_VERTICAL);
+        coeffName.setText(coefficient.name);
+        coeffName.setTextSize(18);
+        coeffName.setLayoutParams(coeffNameParams);
+
+        coefficientItem.addView(coeffValue);
+        coefficientItem.addView(coeffName);
 
         this.coefficientsList.addView(coefficientItem);
     }

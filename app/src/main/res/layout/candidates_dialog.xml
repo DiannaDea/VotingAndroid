@@ -1,9 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/candidatesList"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingLeft="20dp"
-    android:paddingRight="20dp"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:paddingRight="20dp">
+
+
+    <!--<LinearLayout
+       android:id="@+id/itemCandidate"
+       android:layout_width="match_parent"
+       android:layout_height="45dp"
+       android:orientation="vertical">
+
+       <TextView
+           android:id="@+id/textView5"
+           android:layout_width="match_parent"
+           android:layout_height="22.5dp"
+           android:text="Candidate name"
+           android:textSize="@dimen/h1_font_size" />
+
+       <TextView
+           android:id="@+id/textView3"
+           android:layout_width="match_parent"
+           android:layout_height="22.5dp"
+           android:text="Candidate description" />
+
+   </LinearLayout>-->
 </LinearLayout>
