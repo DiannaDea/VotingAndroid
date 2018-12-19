@@ -176,16 +176,18 @@ public class VotingItemActivity extends AppCompatActivity {
         coefficientItem.setLayoutParams(coefficientItemParams);
 
         TextView coeffValue = new TextView(this);
-        LinearLayout.LayoutParams coeffValueParams = new LinearLayout.LayoutParams(50, LinearLayout.LayoutParams.MATCH_PARENT, 0.2f);
+        LinearLayout.LayoutParams coeffValueParams = new LinearLayout.LayoutParams(20, LinearLayout.LayoutParams.MATCH_PARENT, 0.2f);
         coeffValue.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
         coeffValue.setText(Integer.toString(coefficient.cost));
         coeffValue.setTextColor(getResources().getColor(R.color.colorPrimary));
         coeffValue.setTextSize(20);
+        coeffValue.setBackgroundResource(R.drawable.rounded_textview);
         coeffValue.setTypeface(null, Typeface.BOLD);
         coeffValue.setLayoutParams(coeffValueParams);
 
         TextView coeffName = new TextView(this);
         LinearLayout.LayoutParams coeffNameParams = new LinearLayout.LayoutParams(242, LinearLayout.LayoutParams.MATCH_PARENT, 0.8f);
+        coeffNameParams.setMargins(30,0,0,0);
         coeffName.setGravity(Gravity.CENTER_VERTICAL);
         coeffName.setText(coefficient.name);
         coeffName.setTextSize(18);
