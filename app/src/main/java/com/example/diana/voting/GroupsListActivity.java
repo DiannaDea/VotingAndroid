@@ -2,10 +2,12 @@ package com.example.diana.voting;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.util.Log;
@@ -49,25 +51,37 @@ public class GroupsListActivity extends AppCompatActivity {
     }
 
     private void addGroupToList(final Group group){
-        CardView card = new CardView(this);
+        LinearLayout groupItem = new LinearLayout(this);
+        LinearLayout.LayoutParams groupItemParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        groupItemParams.setMargins(0,20,0,20);
+        groupItem.setOrientation(LinearLayout.HORIZONTAL);
+        groupItem.setBackgroundColor(Color.parseColor("#eaeaea"));
+        groupItem.setLayoutParams(groupItemParams);
 
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.FILL_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-        );
-        params.setMargins(0,0,0,20);
-        card.setLayoutParams(params);
+        TextView abbrValue = new TextView(this);
+        LinearLayout.LayoutParams coeffValueParams = new LinearLayout.LayoutParams(20, LinearLayout.LayoutParams.MATCH_PARENT, 0.2f);
+        abbrValue.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+        abbrValue.setText(group.name.substring(0, 2).toUpperCase());
+        abbrValue.setTextColor(getResources().getColor(R.color.colorPrimary));
+        abbrValue.setTextSize(20);
+        coeffValueParams.setMargins(20, 20, 0, 20);
+        abbrValue.setBackgroundResource(R.drawable.rounded_abbr_group);
+        abbrValue.setTypeface(null, Typeface.BOLD);
+        abbrValue.setLayoutParams(coeffValueParams);
 
-        card.setRadius(9);
-        card.setCardBackgroundColor(Color.parseColor("#FFC6D6C3"));
+        TextView groupName = new TextView(this);
+        LinearLayout.LayoutParams groupNameParams = new LinearLayout.LayoutParams(242, LinearLayout.LayoutParams.MATCH_PARENT, 0.8f);
+        groupNameParams.setMargins(30,0,0,0);
+        groupName.setGravity(Gravity.CENTER_VERTICAL);
+        groupNameParams.setMargins(20, 20, 0, 20);
+        groupName.setText(group.name);
+        groupName.setTextSize(18);
+        groupName.setLayoutParams(groupNameParams);
 
-        TextView tv = new TextView(this);
-        tv.setLayoutParams(params);
-        tv.setText(group.name);
-        tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
-        tv.setPadding(20, 20, 20, 20);
+        groupItem.addView(abbrValue);
+        groupItem.addView(groupName);
 
-        card.setOnClickListener(new View.OnClickListener(){
+        groupItem.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 State.getInstance().setCurGroupId(group._id);
 
@@ -76,9 +90,7 @@ public class GroupsListActivity extends AppCompatActivity {
             }
         });
 
-        card.addView(tv);
-
-        this.groupsList.addView(card);
+        this.groupsList.addView(groupItem);
     }
 
     private void getGroupsList() {
