@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -73,6 +74,7 @@ public class VotingsListActivity extends AppCompatActivity implements AdapterVie
 
     private void setVotingFilter(){
         Spinner votingFilter = findViewById(R.id.selectType);
+        votingFilter.setBackgroundColor(Color.parseColor("#eaeaea"));
 
         String[] items = new String[]{"View all", "New votings", "Already voted"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
@@ -143,8 +145,54 @@ public class VotingsListActivity extends AppCompatActivity implements AdapterVie
     }
 
     private void addVotingToList(final Voting voting){
+        LinearLayout votingItem = new LinearLayout(this);
+        LinearLayout.LayoutParams votingItemParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        votingItemParams.setMargins(0,20,0,20);
+        votingItem.setOrientation(LinearLayout.HORIZONTAL);
+        votingItem.setBackgroundColor(Color.parseColor("#eaeaea"));
+        votingItem.setLayoutParams(votingItemParams);
 
-        CardView card = new CardView(this);
+        votingItem.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                Intent intent = new Intent(VotingsListActivity.this, VotingItemActivity.class);
+
+                State.getInstance().setCurVotingId(voting._id);
+                startActivity(intent);
+            }
+        });
+
+        TextView groupName = new TextView(this);
+        LinearLayout.LayoutParams groupNameParams = new LinearLayout.LayoutParams(242, LinearLayout.LayoutParams.MATCH_PARENT, 0.6f);
+        groupNameParams.setMargins(30,0,0,0);
+        groupName.setGravity(Gravity.CENTER_VERTICAL);
+        groupNameParams.setMargins(20, 20, 0, 20);
+        groupName.setText("# ".concat(voting.topic));
+        groupName.setTextSize(18);
+        groupName.setTypeface(null, Typeface.BOLD);
+        groupName.setTextColor(getResources().getColor(R.color.colorPrimary));
+        groupName.setLayoutParams(groupNameParams);
+
+        Button btnTag = new Button(this);
+        LinearLayout.LayoutParams resultButtonParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 100, 0.2f);
+        resultButtonParams.setMargins(20, 20, 20, 20);
+        btnTag.setText("Results");
+        btnTag.setLayoutParams(resultButtonParams);
+        btnTag.setBackgroundColor(Color.parseColor("#ffffff"));
+        btnTag.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                viewResults(v, voting._id);
+            }
+        });
+
+        votingItem.addView(groupName);
+
+        if (voting.status.equals("finished")) {
+            votingItem.addView(btnTag);
+        }
+
+        this.votingsList.addView(votingItem);
+
+        /*CardView card = new CardView(this);
         LinearLayout votingItemContainer = new LinearLayout(this);
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -162,7 +210,7 @@ public class VotingsListActivity extends AppCompatActivity implements AdapterVie
 
         card.addView(votingItemContainer);
 
-        this.votingsList.addView(card);
+        this.votingsList.addView(card);*/
     }
 
     private void getVotingListByState(final String state) {
