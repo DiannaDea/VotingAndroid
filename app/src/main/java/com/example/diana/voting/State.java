@@ -4,7 +4,7 @@ public class State {
     public String userId;
     public String curGroupId;
     public String curVotingId;
-    public String baseUrl = "http://192.168.0.78:5000/api";
+    public String baseUrl = "https://voting-app-university-server.herokuapp.com/api";
 
     public void setUserId(String userId) {
         this.userId = userId;
