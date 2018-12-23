@@ -4,6 +4,7 @@ public class State {
     public String userId;
     public String curGroupId;
     public String curVotingId;
+    public String baseUrl = "http://192.168.0.78:5000/api";
 
     public void setUserId(String userId) {
         this.userId = userId;
@@ -27,6 +28,10 @@ public class State {
 
     public String getCurVotingId() {
         return curVotingId;
+    }
+
+    public String getBaseUrl() {
+        return this.baseUrl;
     }
 
     private static final State state = new State();

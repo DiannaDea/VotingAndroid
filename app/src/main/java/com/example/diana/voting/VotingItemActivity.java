@@ -36,7 +36,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class VotingItemActivity extends AppCompatActivity {
-    String baseUrl = "http://192.168.37.146:5000/api";
+    String baseUrl = State.getInstance().getBaseUrl();
     RequestQueue requestQueue;
     Gson gson = new Gson();
 
@@ -144,24 +144,24 @@ public class VotingItemActivity extends AppCompatActivity {
 
     private void addCandidateToDialogList(Candidate candidate) {
         LinearLayout candidateItem = new LinearLayout(this);
-        LinearLayout.LayoutParams candidateItemParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 120);
-        candidateItemParams.setMargins(15,10,0,10);
+        LinearLayout.LayoutParams candidateItemParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 0.6f);
+        candidateItemParams.setMargins(15,10,0,0);
         candidateItem.setOrientation(LinearLayout.VERTICAL);
         candidateItem.setLayoutParams(candidateItemParams);
 
         TextView candidateName = new TextView(this);
-        LinearLayout.LayoutParams candidateNameParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 60);
+        LinearLayout.LayoutParams candidateNameParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 0.4f);
         candidateName.setText(candidate.name);
         candidateName.setTypeface(null, Typeface.BOLD);
         candidateName.setTextColor(getResources().getColor(R.color.colorPrimary));
-        candidateName.setTextSize(20);
+        candidateName.setTextSize(getResources().getDimension(R.dimen.h2_font_size));
         candidateName.setLayoutParams(candidateNameParams);
 
         TextView candidateDescription = new TextView(this);
         LinearLayout.LayoutParams candidateDescriptionParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 60);
         candidateDescription.setText(candidate.description);
         candidateDescription.setLayoutParams(candidateDescriptionParams);
-
+        candidateDescription.setTextSize(getResources().getDimension(R.dimen.h3_font_size));
         candidateItem.addView(candidateName);
         candidateItem.addView(candidateDescription);
 
@@ -171,12 +171,12 @@ public class VotingItemActivity extends AppCompatActivity {
     private void addCoefficientToDialogList(Coefficient coefficient) {
         LinearLayout coefficientItem = new LinearLayout(this);
         LinearLayout.LayoutParams coefficientItemParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        coefficientItemParams.setMargins(0,20,0,20);
+        coefficientItemParams.setMargins(0,20,0,10);
         coefficientItem.setOrientation(LinearLayout.HORIZONTAL);
         coefficientItem.setLayoutParams(coefficientItemParams);
 
         TextView coeffValue = new TextView(this);
-        LinearLayout.LayoutParams coeffValueParams = new LinearLayout.LayoutParams(20, LinearLayout.LayoutParams.MATCH_PARENT, 0.2f);
+        LinearLayout.LayoutParams coeffValueParams = new LinearLayout.LayoutParams(20, LinearLayout.LayoutParams.MATCH_PARENT, 0.7f);
         coeffValue.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
         coeffValue.setText(Integer.toString(coefficient.cost));
         coeffValue.setTextColor(getResources().getColor(R.color.colorPrimary));
@@ -186,11 +186,11 @@ public class VotingItemActivity extends AppCompatActivity {
         coeffValue.setLayoutParams(coeffValueParams);
 
         TextView coeffName = new TextView(this);
-        LinearLayout.LayoutParams coeffNameParams = new LinearLayout.LayoutParams(242, LinearLayout.LayoutParams.MATCH_PARENT, 0.8f);
-        coeffNameParams.setMargins(30,0,0,0);
+        LinearLayout.LayoutParams coeffNameParams = new LinearLayout.LayoutParams(242, LinearLayout.LayoutParams.MATCH_PARENT, 0.3f);
+        coeffNameParams.setMargins(20,0,0,0);
         coeffName.setGravity(Gravity.CENTER_VERTICAL);
         coeffName.setText(coefficient.name);
-        coeffName.setTextSize(18);
+        coeffName.setTextSize(getResources().getDimension(R.dimen.h2_font_size));
         coeffName.setLayoutParams(coeffNameParams);
 
         coefficientItem.addView(coeffValue);

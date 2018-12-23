@@ -34,7 +34,7 @@ public class GroupsListActivity extends AppCompatActivity {
     LinearLayout groupsList;
     RequestQueue requestQueue;
 
-    String baseUrl = "http://192.168.37.146:5000/api";
+    String baseUrl = State.getInstance().getBaseUrl();
     String url;
     Gson gson = new Gson();
 
@@ -53,7 +53,7 @@ public class GroupsListActivity extends AppCompatActivity {
     private void addGroupToList(final Group group){
         LinearLayout groupItem = new LinearLayout(this);
         LinearLayout.LayoutParams groupItemParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        groupItemParams.setMargins(0,20,0,20);
+        groupItemParams.setMargins(0,20,0,0);
         groupItem.setOrientation(LinearLayout.HORIZONTAL);
         groupItem.setBackgroundColor(Color.parseColor("#eaeaea"));
         groupItem.setLayoutParams(groupItemParams);
@@ -63,7 +63,7 @@ public class GroupsListActivity extends AppCompatActivity {
         abbrValue.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
         abbrValue.setText(group.name.substring(0, 2).toUpperCase());
         abbrValue.setTextColor(getResources().getColor(R.color.colorPrimary));
-        abbrValue.setTextSize(20);
+        abbrValue.setTextSize(getResources().getDimension(R.dimen.h2_font_size));
         coeffValueParams.setMargins(20, 20, 0, 20);
         abbrValue.setBackgroundResource(R.drawable.rounded_abbr_group);
         abbrValue.setTypeface(null, Typeface.BOLD);
@@ -75,7 +75,7 @@ public class GroupsListActivity extends AppCompatActivity {
         groupName.setGravity(Gravity.CENTER_VERTICAL);
         groupNameParams.setMargins(20, 20, 0, 20);
         groupName.setText(group.name);
-        groupName.setTextSize(18);
+        groupName.setTextSize(getResources().getDimension(R.dimen.h2_font_size));
         groupName.setLayoutParams(groupNameParams);
 
         groupItem.addView(abbrValue);

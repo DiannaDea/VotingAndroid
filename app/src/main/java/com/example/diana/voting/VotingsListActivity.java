@@ -43,7 +43,7 @@ public class VotingsListActivity extends AppCompatActivity implements AdapterVie
 
     RequestQueue requestQueue;
 
-    String baseUrl = "http://192.168.37.146:5000/api";
+    String baseUrl = State.getInstance().getBaseUrl();
     Gson gson = new Gson();
 
     LinearLayout votingsList;
@@ -76,7 +76,6 @@ public class VotingsListActivity extends AppCompatActivity implements AdapterVie
 
     private void setVotingFilter(){
         Spinner votingFilter = findViewById(R.id.selectType);
-        votingFilter.setBackgroundColor(Color.parseColor("#eaeaea"));
 
         String[] items = new String[]{"View all", "New votings", "Already voted"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
@@ -114,8 +113,8 @@ public class VotingsListActivity extends AppCompatActivity implements AdapterVie
 
     private void addVotingToList(final Voting voting){
         LinearLayout votingItem = new LinearLayout(this);
-        LinearLayout.LayoutParams votingItemParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        votingItemParams.setMargins(0,20,0,20);
+        LinearLayout.LayoutParams votingItemParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 90);
+        votingItemParams.setMargins(0,20,0,0);
         votingItem.setOrientation(LinearLayout.HORIZONTAL);
         votingItem.setBackgroundColor(Color.parseColor("#eaeaea"));
         votingItem.setLayoutParams(votingItemParams);
@@ -135,13 +134,13 @@ public class VotingsListActivity extends AppCompatActivity implements AdapterVie
         groupName.setGravity(Gravity.CENTER_VERTICAL);
         groupNameParams.setMargins(20, 20, 0, 20);
         groupName.setText("# ".concat(voting.topic));
-        groupName.setTextSize(18);
+        groupName.setTextSize(getResources().getDimension(R.dimen.h3_font_size));
         groupName.setTypeface(null, Typeface.BOLD);
         groupName.setTextColor(getResources().getColor(R.color.colorPrimary));
         groupName.setLayoutParams(groupNameParams);
 
         Button btnTag = new Button(this);
-        LinearLayout.LayoutParams resultButtonParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, 100, 0.2f);
+        LinearLayout.LayoutParams resultButtonParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 0.2f);
         resultButtonParams.setMargins(20, 20, 20, 20);
         btnTag.setText("Results");
         btnTag.setLayoutParams(resultButtonParams);
@@ -159,26 +158,6 @@ public class VotingsListActivity extends AppCompatActivity implements AdapterVie
         }
 
         this.votingsList.addView(votingItem);
-
-        /*CardView card = new CardView(this);
-        LinearLayout votingItemContainer = new LinearLayout(this);
-
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.FILL_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-        );
-        params.setMargins(0,0,0,20);
-        card.setLayoutParams(params);
-
-        card.setRadius(9);
-        card.setCardBackgroundColor(Color.parseColor("#FFC6D6C3"));
-
-        this.addTextToContainer(voting, votingItemContainer);
-        this.addButtonToContainer(voting, votingItemContainer);
-
-        card.addView(votingItemContainer);
-
-        this.votingsList.addView(card);*/
     }
 
     private void getVotingListByState(final String state) {
@@ -250,25 +229,25 @@ public class VotingsListActivity extends AppCompatActivity implements AdapterVie
 
     private LinearLayout addResultDescription(ResultsItem result) {
         LinearLayout candidateItem = new LinearLayout(this);
-        LinearLayout.LayoutParams candidateItemParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 0.8f);
-        candidateItemParams.setMargins(50,20,0,20);
+        LinearLayout.LayoutParams candidateItemParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 0.2f);
+        candidateItemParams.setMargins(50,0,0,20);
         candidateItem.setOrientation(LinearLayout.VERTICAL);
         candidateItem.setLayoutParams(candidateItemParams);
 
 
         TextView resultName = new TextView(this);
-        LinearLayout.LayoutParams resultNameParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 0.5f);
+        LinearLayout.LayoutParams resultNameParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 0.8f);
         resultName.setGravity(Gravity.FILL_VERTICAL);
         resultName.setText(result.candidate.name);
         resultName.setTypeface(null, Typeface.BOLD);
-        resultName.setTextSize(18);
+        resultName.setTextSize(getResources().getDimension(R.dimen.h2_font_size));
         resultName.setLayoutParams(resultNameParams);
 
         TextView votesValue = new TextView(this);
-        LinearLayout.LayoutParams votesValueParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 0.5f);
+        LinearLayout.LayoutParams votesValueParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 0.8f);
         votesValue.setGravity(Gravity.FILL_VERTICAL);
         votesValue.setText("result: ".concat(Double.toString(result.votesValue)));
-        votesValue.setTextSize(18);
+        votesValue.setTextSize(getResources().getDimension(R.dimen.h3_font_size));
         votesValue.setLayoutParams(votesValueParams);
 
         candidateItem.addView(resultName);
@@ -280,12 +259,12 @@ public class VotingsListActivity extends AppCompatActivity implements AdapterVie
     private void addResultToDialogList(ResultsItem result, LinearLayout resultsListContainer, int count) {
         LinearLayout resultItem = new LinearLayout(this);
         LinearLayout.LayoutParams resultItemParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        resultItemParams.setMargins(0,20,20,20);
+        resultItemParams.setMargins(0,20,0,0);
         resultItem.setOrientation(LinearLayout.HORIZONTAL);
         resultItem.setLayoutParams(resultItemParams);
 
         TextView positionValue = new TextView(this);
-        LinearLayout.LayoutParams positionValueParams = new LinearLayout.LayoutParams(180, LinearLayout.LayoutParams.MATCH_PARENT, 0.2f);
+        LinearLayout.LayoutParams positionValueParams = new LinearLayout.LayoutParams(180, LinearLayout.LayoutParams.MATCH_PARENT, 0.3f);
         positionValue.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
         positionValue.setText("#".concat(Integer.toString(count)));
         positionValue.setTextColor(getResources().getColor(R.color.colorPrimary));

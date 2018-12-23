@@ -15,8 +15,8 @@
         android:layout_marginRight="24dp"
         android:gravity="right"
         android:text="TextView"
-        android:textColor="@android:color/holo_orange_dark"
-        android:textSize="@dimen/h1_font_size"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/h2_font_size"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,15 +24,14 @@
     <TextView
         android:id="@+id/percent"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
         android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textSize="@dimen/h1_font_size"
+        android:textSize="@dimen/h2_font_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/percentPlaceholder2"
-        tools:textSize="18sp" />
+        tools:textSize="@dimen/h2_font_size" />
 
     <TextView
         android:id="@+id/percentPlaceholder2"
@@ -43,6 +42,7 @@
         android:layout_marginTop="24dp"
         android:text="Voters percent"
         android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/h4_font_size"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/percent"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,38 +51,37 @@
     <TextView
         android:id="@+id/dateEnd"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="55dp"
         android:layout_marginLeft="55dp"
         android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textSize="@dimen/h1_font_size"
+        android:textSize="@dimen/h2_font_size"
         app:layout_constraintStart_toEndOf="@+id/dateStart"
         app:layout_constraintTop_toBottomOf="@+id/voteEndPlaceholder"
-        tools:textSize="18sp" />
+        tools:textSize="@dimen/h2_font_size" />
 
     <TextView
         android:id="@+id/dateStart"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
         android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textSize="@dimen/h1_font_size"
+        android:textSize="@dimen/h2_font_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/voteStartPlaceholder"
-        tools:textSize="18sp" />
+        tools:textSize="@dimen/h2_font_size" />
 
     <TextView
         android:id="@+id/topicPlaceholder"
         android:layout_width="0dp"
-        android:layout_height="19dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="32dp"
         android:text="Topic"
         android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/h4_font_size"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/topic"
         app:layout_constraintStart_toStartOf="parent"
@@ -92,15 +91,14 @@
     <TextView
         android:id="@+id/topic"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginLeft="24dp"
         android:layout_marginTop="8dp"
-        android:text="TextView"
-        android:textSize="@dimen/h1_font_size"
+        android:textSize="@dimen/h2_font_size"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/topicPlaceholder"
-        tools:textSize="18sp" />
+        tools:textSize="@dimen/h2_font_size" />
 
     <TextView
         android:id="@+id/voteStartPlaceholder"
@@ -111,6 +109,7 @@
         android:layout_marginTop="24dp"
         android:text="Voting start"
         android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/h4_font_size"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/dateStart"
         app:layout_constraintStart_toStartOf="parent"
@@ -123,6 +122,7 @@
         android:layout_marginTop="24dp"
         android:text="Voting end"
         android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/h4_font_size"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/dateEnd"
         app:layout_constraintTop_toBottomOf="@+id/topic" />
@@ -131,13 +131,15 @@
         android:id="@+id/viewCandidates"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
         android:onClick="viewCandidates"
+        android:padding="10dp"
         android:text="View Candidates"
+        android:textSize="@dimen/h4_font_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/percent" />
@@ -146,13 +148,15 @@
         android:id="@+id/viewCoefficients"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
         android:onClick="viewCoefficients"
+        android:padding="10dp"
         android:text="View Coefficients"
+        android:textSize="@dimen/h4_font_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewCandidates" />
@@ -165,8 +169,7 @@
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
         android:text="Status:"
-        android:textColor="@android:color/holo_orange_dark"
-        android:textSize="@dimen/h1_font_size"
+        android:textSize="@dimen/h2_font_size"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/status"
         app:layout_constraintTop_toTopOf="parent" />

@@ -3,8 +3,5 @@
     <string name="textView_email">Email</string>
     <string name="textView_password">Password</string>
     <string name="button_login">Login</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="textView_join_group">Choose a group you want to join</string>
+    <string name="textView_join_group">My groups</string>
 </resources>
