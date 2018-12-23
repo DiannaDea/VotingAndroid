@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Voting</string>
+    <string name="textView_email">Електронна пошта</string>
+    <string name="textView_password">Пароль</string>
+    <string name="button_login">Увійти</string>
+    <string name="textView_join_group">Мої групи</string>
+    <string name="app_text_welcome">Вітаємо у VoteUp!</string>
+    <string name="app_votings_list">Мої голосування</string>
+    <string name="app_votings_filter">Фільтр</string>
+    <string name="app_votings_select_var_1">Дивитися усі</string>
+    <string name="app_votings_select_var_2">Нові голосовування</string>
+    <string name="app_votings_select_var_3">Вже проголосували</string>
+    <string name="app_voting_result_btn">Результати</string>
+    <string name="dialog_results_header">Результати</string>
+    <string name="dialog_result_p">"результат: "</string>
+    <string name="voting_item_topic">Тема</string>
+    <string name="voting_item_start">Дата початку</string>
+    <string name="voting_item_end">Дата кінця</string>
+    <string name="voting_item_voters_percent">Відсоток виборців</string>
+    <string name="voting_item_status">"Статус: "</string>
+    <string name="btn_view_candidates">Усі кандидати</string>
+    <string name="btn_view_coefficients">Усі коефіцієнти</string>
+    <string name="dialog_candidates_header">Кандидати</string>
+    <string name="dialog_coefficients_header">Коефіцієнти</string>
+</resources>

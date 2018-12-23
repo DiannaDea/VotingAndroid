@@ -77,7 +77,11 @@ public class VotingsListActivity extends AppCompatActivity implements AdapterVie
     private void setVotingFilter(){
         Spinner votingFilter = findViewById(R.id.selectType);
 
-        String[] items = new String[]{"View all", "New votings", "Already voted"};
+        String[] items = new String[]{
+                getResources().getString(R.string.app_votings_select_var_1),
+                getResources().getString(R.string.app_votings_select_var_2),
+                getResources().getString(R.string.app_votings_select_var_3)
+        };
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
 
         votingFilter.setAdapter(adapter);
@@ -142,7 +146,7 @@ public class VotingsListActivity extends AppCompatActivity implements AdapterVie
         Button btnTag = new Button(this);
         LinearLayout.LayoutParams resultButtonParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 0.2f);
         resultButtonParams.setMargins(20, 20, 20, 20);
-        btnTag.setText("Results");
+        btnTag.setText(getResources().getString(R.string.app_voting_result_btn));
         btnTag.setLayoutParams(resultButtonParams);
         btnTag.setBackgroundColor(Color.parseColor("#ffffff"));
         btnTag.setOnClickListener(new View.OnClickListener(){
@@ -246,7 +250,7 @@ public class VotingsListActivity extends AppCompatActivity implements AdapterVie
         TextView votesValue = new TextView(this);
         LinearLayout.LayoutParams votesValueParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 0.8f);
         votesValue.setGravity(Gravity.FILL_VERTICAL);
-        votesValue.setText("result: ".concat(Double.toString(result.votesValue)));
+        votesValue.setText(getResources().getString(R.string.dialog_result_p).concat(Double.toString(result.votesValue)));
         votesValue.setTextSize(getResources().getDimension(R.dimen.h3_font_size));
         votesValue.setLayoutParams(votesValueParams);
 
@@ -304,7 +308,7 @@ public class VotingsListActivity extends AppCompatActivity implements AdapterVie
 
     public void showResultsDialog(VotingResults votingResults) {
         AlertDialog.Builder builder = new AlertDialog.Builder(VotingsListActivity.this);
-        builder.setTitle("Results");
+        builder.setTitle(getResources().getString(R.string.dialog_results_header));
 
         final View customLayout = getLayoutInflater().inflate(R.layout.voting_results_dialog, null);
         builder.setView(customLayout);

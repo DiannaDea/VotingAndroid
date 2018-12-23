@@ -213,7 +213,7 @@ public class VotingItemActivity extends AppCompatActivity {
 
     public void viewCandidates(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Voting candidates");
+        builder.setTitle(getResources().getString(R.string.dialog_candidates_header));
 
         final View customLayout = getLayoutInflater().inflate(R.layout.candidates_dialog, null);
         builder.setView(customLayout);
@@ -234,7 +234,7 @@ public class VotingItemActivity extends AppCompatActivity {
 
     public void viewCoefficients(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Voting coefficients");
+        builder.setTitle(getResources().getString(R.string.dialog_coefficients_header));
 
         final View customLayout = getLayoutInflater().inflate(R.layout.coefficients_dialog, null);
         builder.setView(customLayout);

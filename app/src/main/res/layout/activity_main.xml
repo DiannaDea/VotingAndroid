@@ -17,7 +17,7 @@
         android:layout_marginRight="24dp"
         android:layout_marginBottom="24dp"
         android:gravity="center"
-        android:text="Welcome to VoteUp!"
+        android:text="@string/app_text_welcome"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/h1_font_size"
         android:textStyle="bold"

@@ -4,4 +4,22 @@
     <string name="textView_password">Password</string>
     <string name="button_login">Login</string>
     <string name="textView_join_group">My groups</string>
+    <string name="app_text_welcome">Welcome to VoteUp!</string>
+    <string name="app_votings_list">My votings</string>
+    <string name="app_votings_filter">Filter</string>
+    <string name="app_votings_select_var_1">View all</string>
+    <string name="app_votings_select_var_2">New votings</string>
+    <string name="app_votings_select_var_3">Already voted</string>
+    <string name="app_voting_result_btn">Resuls</string>
+    <string name="dialog_results_header">Results</string>
+    <string name="dialog_result_p">"result: "</string>
+    <string name="voting_item_topic">Topic</string>
+    <string name="voting_item_start">Voting start</string>
+    <string name="voting_item_end">Voting end</string>
+    <string name="voting_item_voters_percent">Voters percent</string>
+    <string name="voting_item_status">Status:</string>
+    <string name="btn_view_candidates">View candidates</string>
+    <string name="btn_view_coefficients">View cofficients</string>
+    <string name="dialog_candidates_header">Voting candidates</string>
+    <string name="dialog_coefficients_header">Voting coefficients</string>
 </resources>
